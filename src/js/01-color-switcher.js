@@ -11,11 +11,11 @@ function startColorsChange() {
     buttonStop.disabled = false;
 };
 
-const onButtonStart = () => {
+function onButtonStart() {
     timerId = setInterval(startColorsChange, 1000);
 };
 
-const onButtonStop = () => {
+function onButtonStop() {
     clearInterval(timerId);
     buttonStart.disabled = false;
     buttonStop.disabled = true;
