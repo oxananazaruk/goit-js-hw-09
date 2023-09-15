@@ -31,20 +31,25 @@ buttonStart.disabled = false;
 
 flatpickr("#datetime-picker", options);
 
+let dateDifference;
+
 function onButtonStart() {
-const celectedDate = new Date(inputEl.value).getTime();
-  const currentDate = Date.now();
-  const dateDifference = celectedDate - currentDate;
+ const timerId = setInterval(() => {
+    const celectedDate = new Date(inputEl.value).getTime();
+    const currentDate = Date.now();
+     dateDifference = celectedDate - currentDate;
+    
+    const timeCounter = convertMs(dateDifference);
 
-  const timeCounter = convertMs(dateDifference);
-  console.log(timeCounter);
-  setInterval(() => {
-    daysEl.textContent = timeCounter.days;
-    hoursEl.textContent = timeCounter.hours;
-    minutesEl.textContent = timeCounter.minutes;
-    secondsEl.textContent = timeCounter.seconds;
-  }, 1000);
-
+    daysEl.textContent = addLeadingZero(timeCounter.days);
+    hoursEl.textContent = addLeadingZero(timeCounter.hours);
+    minutesEl.textContent = addLeadingZero(timeCounter.minutes);
+    secondsEl.textContent = addLeadingZero(timeCounter.seconds);
+ }, 1000);
+  
+  if (dateDifference === 0) {
+    clearInterval(timerId);
+}
 }
 
 function convertMs(ms) {
@@ -64,8 +69,10 @@ function convertMs(ms) {
   const seconds = Math.floor((((ms % day) % hour) % minute) / second);
 
   return { days, hours, minutes, seconds };
-}
+};
 
-
+function addLeadingZero(value) {
+ return value.toString().padStart(2, '0');
+};
 
 buttonStart.addEventListener('click', onButtonStart);
