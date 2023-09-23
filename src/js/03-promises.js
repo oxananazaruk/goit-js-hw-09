@@ -24,9 +24,9 @@ function onSubmitCreatePromise(event) {
   const delayStep = +event.currentTarget.step.value;
   const inputAmount = +event.currentTarget.amount.value;
 
-  for (let i = 1; i <= inputAmount; i += 1) {
-    inputDelay += delayStep * (i-1);
-  createPromise(i, inputDelay)
+  for (let i = 0; i < inputAmount; i += 1) {
+    const promiseDelay = inputDelay + delayStep * i;
+  createPromise(i + 1, promiseDelay)
   .then(({ position, delay }) => {
     Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
   })

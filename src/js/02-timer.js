@@ -37,7 +37,7 @@ function onButtonStart() {
 
     if (dateDifference < 1000) {
         clearInterval(tmrId);
-        buttonStart.disabled = false;
+        // buttonStart.disabled = false;
         inputEl.disabled = false;
    }
    
