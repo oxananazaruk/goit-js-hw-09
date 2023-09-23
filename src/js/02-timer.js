@@ -9,20 +9,15 @@ const hoursEl = document.querySelector('span[data-hours]');
 const minutesEl = document.querySelector('span[data-minutes]');
 const secondsEl = document.querySelector('span[data-seconds]');
 
-buttonStart.disabled = true;
-
  const options = {
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    console.log(selectedDates[0]);
-    const selectedDate = selectedDates[0].getTime();
-    const currentDate = Date.now();
-
-    if (selectedDate <= currentDate) {
-     Notify.failure('Please choose a date in the future');
+    if (selectedDates[0] <= Date.now()) {
+      Notify.failure('Please choose a date in the future');
+      buttonStart.disabled = true;
     } else {
 buttonStart.disabled = false;
     }
@@ -31,26 +26,29 @@ buttonStart.disabled = false;
 
 flatpickr("#datetime-picker", options);
 
-let dateDifference;
-
 function onButtonStart() {
- const timerId = setInterval(() => {
-    const celectedDate = new Date(inputEl.value).getTime();
-    const currentDate = Date.now();
-     dateDifference = celectedDate - currentDate;
-    
-    const timeCounter = convertMs(dateDifference);
+  buttonStart.disabled = true;
+  inputEl.disabled = true;
+  
+ const tmrId = setInterval(() => {
+     const currentDate = Date.now();
+    const selectetDate = new Date(inputEl.value);
+   const dateDifference = selectetDate - currentDate;
 
+    if (dateDifference < 1000) {
+        clearInterval(tmrId);
+        buttonStart.disabled = false;
+        inputEl.disabled = false;
+   }
+   
+     const timeCounter = convertMs(dateDifference);
+   
     daysEl.textContent = addLeadingZero(timeCounter.days);
     hoursEl.textContent = addLeadingZero(timeCounter.hours);
     minutesEl.textContent = addLeadingZero(timeCounter.minutes);
-    secondsEl.textContent = addLeadingZero(timeCounter.seconds);
+   secondsEl.textContent = addLeadingZero(timeCounter.seconds);
  }, 1000);
-  
-  if (dateDifference === 0) {
-    clearInterval(timerId);
-}
-}
+};
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
@@ -76,3 +74,4 @@ function addLeadingZero(value) {
 };
 
 buttonStart.addEventListener('click', onButtonStart);
+

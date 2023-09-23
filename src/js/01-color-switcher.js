@@ -5,14 +5,15 @@ const bodyEl = document.querySelector('body');
 let timerId = null;
 buttonStop.disabled = true;
 
-function startColorsChange() {
-    bodyEl.style.backgroundColor = getRandomHexColor(); 
-     buttonStart.disabled = true;
-    buttonStop.disabled = false;
-};
 
 function onButtonStart() {
-    timerId = setInterval(startColorsChange, 1000);
+    bodyEl.style.backgroundColor = getRandomHexColor();
+
+    timerId = setInterval(() => {
+      bodyEl.style.backgroundColor = getRandomHexColor();   
+    }, 1000);
+    buttonStart.disabled = true;
+    buttonStop.disabled = false;
 };
 
 function onButtonStop() {
@@ -27,6 +28,5 @@ function getRandomHexColor() {
     .padStart(6, 0)}`;
 };
 
-buttonStart.addEventListener('click', startColorsChange);
 buttonStart.addEventListener('click', onButtonStart);
 buttonStop.addEventListener('click', onButtonStop);
