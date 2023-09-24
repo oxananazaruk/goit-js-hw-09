@@ -9,6 +9,8 @@ const hoursEl = document.querySelector('span[data-hours]');
 const minutesEl = document.querySelector('span[data-minutes]');
 const secondsEl = document.querySelector('span[data-seconds]');
 
+buttonStart.disabled = true;
+
  const options = {
   enableTime: true,
   time_24hr: true,
@@ -17,7 +19,6 @@ const secondsEl = document.querySelector('span[data-seconds]');
   onClose(selectedDates) {
     if (selectedDates[0] <= Date.now()) {
       Notify.failure('Please choose a date in the future');
-      buttonStart.disabled = true;
     } else {
 buttonStart.disabled = false;
     }

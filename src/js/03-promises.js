@@ -20,7 +20,7 @@ function createPromise(position, delay) {
 
 function onSubmitCreatePromise(event) {
   event.preventDefault();
-  let inputDelay = +event.currentTarget.delay.value;
+  const inputDelay = +event.currentTarget.delay.value;
   const delayStep = +event.currentTarget.step.value;
   const inputAmount = +event.currentTarget.amount.value;
 
